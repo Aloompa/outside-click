@@ -19,7 +19,7 @@ const handleClick = (handleEvent, e) => {
     }
 
     handleEvent(e);
-}
+};
 
 /**
  * @class     OutsideClick
