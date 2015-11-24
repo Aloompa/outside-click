@@ -41,7 +41,7 @@ class OutsideClick {
      * @return {void}
      */
     addHandler (eventHandler) {
-        let fn = handleClick.call(this, eventHandler);
+        let fn = handleClick.bind(this, eventHandler);
         this.handlers.push(fn);
 
         document.addEventListener('mousedown', fn);
