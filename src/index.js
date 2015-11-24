@@ -1,4 +1,27 @@
 /**
+ * If the click happened outside our element, pass it along, otherwise stop!
+ *
+ * @param  {Function} handleEvent Click handler.
+ * @param  {Object}   e           Click/touch Event.
+ * @return {void}
+ */
+const handleClick = (handleEvent, e) => {
+    let level = 0;
+
+    for (let target = e.target; target; target = target.parentNode) {
+        let found = this.elements.indexOf(target) > -1;
+
+        if (found) {
+            return;
+        }
+
+        level++;
+    }
+
+    handleEvent(e);
+}
+
+/**
  * @class     OutsideClick
  * @classdesc Utility class for handling clicks and touches outside of a specific element.
  *
@@ -18,7 +41,7 @@ class OutsideClick {
      * @return {void}
      */
     addHandler (eventHandler) {
-        let fn = this._handleClick.bind(this, eventHandler);
+        let fn = handleClick.call(this, eventHandler);
         this.handlers.push(fn);
 
         document.addEventListener('mousedown', fn);
@@ -57,28 +80,6 @@ class OutsideClick {
         });
     }
 
-    /**
-     * If the click happened outside our element, pass it along, otherwise stop!
-     *
-     * @param  {Function} handleEvent Click handler.
-     * @param  {Object}   e           Click/touch Event.
-     * @return {void}
-     */
-    _handleClick (handleEvent, e) {
-        let level = 0;
-
-        for (let target = e.target; target; target = target.parentNode) {
-            let found = this.elements.indexOf(target) > -1;
-
-            if (found) {
-                return;
-            }
-
-            level++;
-        }
-
-        handleEvent(e);
-    }
 }
 
 module.exports = OutsideClick;
