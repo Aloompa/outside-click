@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Outside Click Basic Usage</title>
+        <style media="screen">
+            #inside {
+                background: #DBE1EB;
+                height: 160px;
+                width: 300px;
+                float: left;
+                text-align: center;
+                padding-top: 140px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="inside">
+            <h1>Go ahead!</h1>
+            <p>Click outside this element</p>
+        </div>
+
+        <script src="/dist/outside-click.js"></script>
+        <script>
+        outsideClick(document.getElementById('inside'), function () {
+            alert('You clicked outside the element');
+        });
+        </script>
+    </body>
+</html>

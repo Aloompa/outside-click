@@ -1,24 +1,23 @@
 ## Welcome to outside-click
 
-A utility class for attaching "outside click" handlers to DOM elements.
+A utility class for attaching "outside click" handlers to DOM elements. This allows you to listen for clicks that happen in parent or sibling elements to the element that is specified.
 
 ## Examples
 
 #### Using in a ReactJS component:
 
 ```
-const OutsideClick = require('outside-click');
+const outsideClick = require('outside-click');
 
 class MyViewComponent extends React.Component {
 
 	componentDidMount () {
-		var element = React.findDOMNode(this);
-		this.outsideClick = new OutsideClick(element);
-		this.outsideHandler = this.outsideClick.addHandler(this.close.bind(this));
+		const element = React.findDOMNode(this);
+		this.outsideClick = outsideClick(element, this.close.bind(this));
 	}
 
 	componentWillUnmount () {
-		this.outsideClick.removeHandler(this.outsideHandler);
+		this.outsideClick.off();
 	}
 
 }
@@ -27,17 +26,11 @@ class MyViewComponent extends React.Component {
 
 ## API
 
-#### Attach handlers to element(s): `new OutsideClick(elem1, [elem2, ...])`
-> When instantiating our utility class, pass in one or more elements that we want our handlers attached to. This would be useful for when we want to attach listeners to our main target element and another related element that lives outside of it.
+#### Attach handlers to element(s): `outsideClick(elem1, <Function>)`
+> The outsideClick method takes an element (or array of elements) as the first argument and a callback as the second argument. The callback will only be triggered when an element outside the target element or elements is clicked.
 
-#### Add an event handler: `.addHandler(<Function>)`
-> Attach a single event handler to the elements on our class.
-
-#### Remove an event handler: `.removeHandler(<Function>)`
-> Remove a single event handler from the elements on our class.
-
-#### Remove all class handlers: `.removeAllHandlers()`
-> This is a convenience method for removing all existing handlers that have been bound to the current class instance.
+#### Remove an event handler: `.off()`
+> Remove the event handler from the element or elements.
 
 ## Contributing
 
